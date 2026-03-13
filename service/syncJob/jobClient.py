@@ -255,10 +255,11 @@ class JobTask:
         :return:
         """
         logger = logging.getLogger()
+        sp = 5
         while True:
             if self.breakFlag:
                 break
-            time.sleep(3)
+            time.sleep(sp * 2)
             doingNums = len(self.doing.keys())
             waitingNums = len(self.waiting)
             if not self.scanFinish or doingNums != 0 or waitingNums != 0:
@@ -270,7 +271,7 @@ class JobTask:
                     else:
                         if self.firstSync is None:
                             self.firstSync = time.time()
-                        time.sleep(2)
+                        time.sleep(sp)
                         self.queueNum += 1
                         self.doing[self.queueNum] = self.waiting.pop(0)
                         self.doing[self.queueNum].doingKey = self.queueNum
