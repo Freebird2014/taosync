@@ -257,7 +257,7 @@ class JobTask:
         while True:
             if self.breakFlag:
                 break
-            time.sleep(0.5)
+            time.sleep(2)
             doingNums = len(self.doing.keys())
             waitingNums = len(self.waiting)
             if not self.scanFinish or doingNums != 0 or waitingNums != 0:
