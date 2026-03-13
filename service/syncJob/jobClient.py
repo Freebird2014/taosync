@@ -254,10 +254,11 @@ class JobTask:
         队列检验与提交
         :return:
         """
+        logger = logging.getLogger()
         while True:
             if self.breakFlag:
                 break
-            time.sleep(2)
+            time.sleep(3)
             doingNums = len(self.doing.keys())
             waitingNums = len(self.waiting)
             if not self.scanFinish or doingNums != 0 or waitingNums != 0:
@@ -269,10 +270,12 @@ class JobTask:
                     else:
                         if self.firstSync is None:
                             self.firstSync = time.time()
+                        time.sleep(2)
                         self.queueNum += 1
                         self.doing[self.queueNum] = self.waiting.pop(0)
                         self.doing[self.queueNum].doingKey = self.queueNum
                         self.doing[self.queueNum].doByThread()
+                        logger.debug("======taskSubmit: " + str(self.queueNum))
                         doingNums = len(self.doing.keys())
                         waitingNums = len(self.waiting)
             else:
